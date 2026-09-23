@@ -163,6 +163,65 @@
       box-shadow: 0 5px 15px rgba(220, 39, 67, 0.4);
     }
 
+    /* Стилове за кликащ имейл с подсказка */
+    .email-contact {
+      margin-top: 15px;
+      font-size: 0.95rem;
+      color: var(--text-light);
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+    }
+
+    .copy-email-btn {
+      position: relative;
+      display: inline-block;
+      color: var(--accent-gold);
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: underline;
+      transition: color 0.2s ease;
+    }
+
+    .copy-email-btn:hover {
+      color: var(--btn-hover);
+    }
+
+    .tooltip {
+      visibility: hidden;
+      width: 140px;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 8px;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+      font-size: 0.8rem;
+      font-weight: normal;
+      border: 1px solid var(--accent-gold);
+      pointer-events: none;
+    }
+
+    .tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: var(--accent-gold) transparent transparent transparent;
+    }
+
+    .copy-email-btn:hover .tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
     .gallery-title {
       text-align: center;
       font-size: 1.35rem;
@@ -333,12 +392,20 @@
 
       <div class="cta-buttons">
         <a href="mailto:alexlazarov835@gmail.com?subject=Поръчка на 3D Фигурка&body=Здравейте,%0A%0AИскам да направя поръчка за 3D фигурка.%0A%0AПрикачвам снимка и следните детайли:%0A-" class="btn">
-          ✉️ Направете запитване
+          ✉️ Поръчай на имейла
         </a>
         <a href="https://www.instagram.com/3dprintedworld.l/" target="_blank" class="btn btn-insta">
-          📷 Разгледайте в Instagram
+          📷 Поръчай през Instagram
         </a>
       </div>
+
+      <p class="email-contact">
+        Имейл за връзка: 
+        <span class="copy-email-btn" onclick="copyEmail()">
+          alexlazarov835@gmail.com
+          <span class="tooltip" id="myTooltip">Копирай имейла</span>
+        </span>
+      </p>
     </section>
 
     <section>
@@ -384,6 +451,19 @@
   <script>
     const images = ['pic-1.jpg', 'pic-2.jpg', 'pic-3.jpg', 'pic-4.jpg'];
     let currentIndex = 0;
+
+    function copyEmail() {
+      const emailText = "alexlazarov835@gmail.com";
+      navigator.clipboard.writeText(emailText).then(() => {
+        const tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Имейлът е копиран!";
+        setTimeout(() => {
+          tooltip.innerHTML = "Копирай имейла";
+        }, 2000);
+      }).catch(err => {
+        console.error('Грешка при копиране: ', err);
+      });
+    }
 
     function openLightbox(index) {
       currentIndex = index;
